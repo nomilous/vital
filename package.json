@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "bin": {
-    "ipso": "./bin/ipso"
+    "vital": "./bin/vital"
   },
   "author": "",
   "repository": "git@github.com:nomilous/vital.git",
