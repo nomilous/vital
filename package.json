@@ -8,5 +8,8 @@
   },
   "author": "",
   "repository": "git@github.com:nomilous/vital.git",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "ipso": "0.0.20"
+  }
 }
