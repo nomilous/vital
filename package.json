@@ -9,6 +9,7 @@
   "repository": "git@github.com:nomilous/vital.git",
   "license": "MIT",
   "dependencies": {
-    "ipso": "0.0.20"
+    "ipso": "0.0.20",
+    "commander": "~2.1.0"
   }
 }
