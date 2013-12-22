@@ -25,12 +25,18 @@ else if path.match /\.js$/ then list = eval "list = { #{readFileSync(path, 'utf8
 # 
 # * handle .litcoffee (maybe)
 # * control repeat interval
-#
+# * handle interval overlap
+# 
+
+try if typeof list.before.all is 'function' then list.before.all()
 
 setInterval (->
 
-    for text of list 
+    try if typeof list.before.each is 'function' then list.before.each()
 
+    for text of list
+
+        continue if text is 'before'
         console.log '%s:', text, list[text]()
 
 ), 1000
