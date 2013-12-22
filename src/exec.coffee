@@ -39,28 +39,13 @@ else if path.match /\.js$/ then list = eval "list = { #{readFileSync(path, 'utf8
 
 
 actionRunner = (text, fn) -> 
-
+    
     #
-    # prepare modules to be injected into the action function
+    # ipso function decorator handles the injection
     #
-
-    args    = util.argsOf fn
-    injects = []
-
-    for arg in args
-
-        if mod = ipso.does.getSync arg
-            injects.unshift mod.object
-            continue
-
-        injects.unshift require arg
-
-    #
-    # call with injection
-    #
-
-    result = fn.apply null, injects
-    console.log "result: %s:", text, result
+   
+    run = ipso fn
+    run done = ->
 
 
 try if typeof list.before.all is 'function' 
