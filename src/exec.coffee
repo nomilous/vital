@@ -35,17 +35,24 @@ else if path.match /\.js$/ then list = eval "list = { #{readFileSync(path, 'utf8
 # * handle interval overlap
 # * async, inject action resolver, done / facto
 # * shared context with hooks
+# * fix cannot inject string, number or array
+# * fix ipso calls does.activate with mode as 'spec' (irrespective of does.mode)
+# * stop append of .does() during injection (per mode)
 # 
 
-
 actionRunner = (text, fn) -> 
-    
+
     #
-    # ipso function decorator handles the injection
+    # * ipso decorates the function with injectability
+    # * the first argument is should be the test resolver
+    # * all subsequent arguments are populated by the injector
     #
-   
-    run = ipso fn
-    run done = ->
+
+    decorated = ipso fn
+    decorated (result) -> 
+
+        if result instanceof Error then console.log result.stack
+
 
 
 try if typeof list.before.all is 'function' 
@@ -60,7 +67,9 @@ setInterval (->
     for text of list
 
         continue if text is 'before'
-        actionRunner text, list[text]
+
+        fn = list[text]
+        actionRunner text, fn
         
 
 ), 1000
