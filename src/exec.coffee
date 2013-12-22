@@ -44,7 +44,7 @@ actionRunner = (text, fn) ->
 
     #
     # * ipso decorates the function with injectability
-    # * the first argument is should be the test resolver
+    # * the first argument is the test resolver
     # * all subsequent arguments are populated by the injector
     #
 
