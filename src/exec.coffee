@@ -15,8 +15,8 @@ ipso   = require('ipso').components()
 path   = join process.cwd(), file unless file[0] is '/'
 
 
-if path.match /\.coffee$/  then list = eval compile readFileSync(path), bare: true
-else if path.match /\.js$/ then list = eval "list = #{readFileSync(path, 'utf8')}"
+if path.match /\.coffee$/  then list = eval compile readFileSync(path, 'utf8'), bare: true
+else if path.match /\.js$/ then list = eval "list = { #{readFileSync(path, 'utf8')} }"
 
 
 console.log list
