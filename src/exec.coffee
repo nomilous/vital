@@ -2,6 +2,7 @@ program = require 'commander'
 {readFileSync, lstatSync} = require 'fs'
 {join} = require 'path'
 {compile} = require 'coffee-script'
+{util} = require 'also'
 
 program.version JSON.parse( 
     readFileSync __dirname + '/../package.json'
@@ -11,8 +12,14 @@ program.version JSON.parse(
 program.option '-f, --file [file]',  'Run file.'
 
 {file} = program.parse process.argv
-ipso   = require('ipso').components()
 path   = join process.cwd(), file unless file[0] is '/'
+
+
+#
+# bring selected ipso ipso tools into scope
+#
+
+{ipso, tag} = require('ipso').components()
 
 
 if path.match /\.coffee$/  then list = eval compile readFileSync(path, 'utf8'), bare: true
@@ -26,18 +33,50 @@ else if path.match /\.js$/ then list = eval "list = { #{readFileSync(path, 'utf8
 # * handle .litcoffee (maybe)
 # * control repeat interval
 # * handle interval overlap
+# * async, inject action resolver, done / facto
+# * shared context with hooks
 # 
 
-try if typeof list.before.all is 'function' then list.before.all()
+
+actionRunner = (text, fn) -> 
+
+    #
+    # prepare modules to be injected into the action function
+    #
+
+    args    = util.argsOf fn
+    injects = []
+
+    for arg in args
+
+        if mod = ipso.does.getSync arg
+            injects.unshift mod.object
+            continue
+
+        injects.unshift require arg
+
+    #
+    # call with injection
+    #
+
+    result = fn.apply null, injects
+    console.log "result: %s:", text, result
+
+
+try if typeof list.before.all is 'function' 
+    actionRunner 'before all', list.before.all
+
 
 setInterval (->
 
-    try if typeof list.before.each is 'function' then list.before.each()
+    try if typeof list.before.each is 'function' 
+        actionRunner 'before each', list.before.each
 
     for text of list
 
         continue if text is 'before'
-        console.log '%s:', text, list[text]()
+        actionRunner text, list[text]
+        
 
 ), 1000
 
