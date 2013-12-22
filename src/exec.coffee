@@ -1,6 +1,7 @@
 program = require 'commander'
-{readFileSync} = require 'fs'
+{readFileSync, lstatSync} = require 'fs'
 {join} = require 'path'
+{compile} = require 'coffee-script'
 
 program.version JSON.parse( 
     readFileSync __dirname + '/../package.json'
@@ -13,11 +14,16 @@ program.option '-f, --file [file]',  'Run file.'
 ipso   = require('ipso').components()
 path   = join process.cwd(), file unless file[0] is '/'
 
-require path
+
+if path.match /\.coffee$/  then list = eval compile readFileSync(path), bare: true
+else if path.match /\.js$/ then list = eval "list = #{readFileSync(path, 'utf8')}"
+
+
+console.log list
+
 
 #
 # TODO:
 # 
-# * handle .coffee and .litcoffee
+# * handle .litcoffee
 #
-

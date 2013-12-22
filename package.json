@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "ipso": "0.0.20",
-    "commander": "~2.1.0"
+    "commander": "~2.1.0",
+    "coffee-script": "~1.6.3"
   }
 }
