@@ -19,11 +19,19 @@ if path.match /\.coffee$/  then list = eval compile readFileSync(path, 'utf8'), 
 else if path.match /\.js$/ then list = eval "list = { #{readFileSync(path, 'utf8')} }"
 
 
-console.log list
-
 
 #
 # TODO:
 # 
-# * handle .litcoffee
+# * handle .litcoffee (maybe)
+# * control repeat interval
 #
+
+setInterval (->
+
+    for text of list 
+
+        console.log '%s:', text, list[text]()
+
+), 1000
+
