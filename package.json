@@ -9,7 +9,7 @@
   "repository": "git@github.com:nomilous/vital.git",
   "license": "MIT",
   "dependencies": {
-    "ipso": "0.0.21",
+    "ipso": "0.0.22",
     "commander": "~2.1.0",
     "coffee-script": "~1.6.3",
     "also": "0.0.13"
