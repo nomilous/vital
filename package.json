@@ -1,6 +1,6 @@
 {
   "name": "vital",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "bin": {
     "vital": "./bin/vital"
