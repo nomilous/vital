@@ -21,7 +21,7 @@ path   = join process.cwd(), file unless file[0] is '/'
 
 module.exports.run = ->
 
-    {ipso, tag} = require('ipso').components()
+    # {ipso, tag} = require('ipso').components()
 
 
     if path.match /\.coffee$/  then list = eval compile fs.readFileSync(path, 'utf8'), bare: true
